@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('organizer_id')->constrained('users');
+            $table->string('name');
+            $table->string('exchange_date');
+            $table->decimal('budget');
+            $table->timestamp('drawn_at')->nullable();
             $table->timestamps();
         });
     }
