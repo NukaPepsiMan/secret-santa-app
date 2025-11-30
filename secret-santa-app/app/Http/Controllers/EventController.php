@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Participant;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -42,6 +45,15 @@ class EventController extends Controller
             'budget' => $request->input('budget'),
         ]);
 
+        $users = User::all();
+
+        foreach($users as $user) {
+            Participant::create([
+                'event_id' => $event->id,
+                'user_id' => $user->id,
+            ]);
+        }
+
         return redirect()->route('events.index');
     }
 
@@ -52,7 +64,6 @@ class EventController extends Controller
     {
         $event->load([
             'participants.user',
-            'participants.givenAssignment',
         ]);
 
         return Inertia::render('Events/Show', [
