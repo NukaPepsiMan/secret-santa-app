@@ -3,7 +3,8 @@ import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createRoot } from 'react-dom/client';
+import { createRoot} from 'react-dom/client';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { HeroUIProvider } from "@heroui/react";
 import { router } from '@inertiajs/react';
 
@@ -17,14 +18,14 @@ createInertiaApp({
             import.meta.glob('./Pages/**/*.jsx'),
         ),
     setup({ el, App, props }) {
+       
         const root = createRoot(el);
 
         root.render(
-            <HeroUIProvider 
-                navigate={router.visit} 
-                className='dark text-foreground bg-background'
-            >
-                <App {...props} />
+            <HeroUIProvider navigate={router.visit}>
+                 <NextThemesProvider attribute="class">
+                    <App {...props} />
+                 </NextThemesProvider>
             </HeroUIProvider>
         );
     },

@@ -1,20 +1,34 @@
 import { Head } from '@inertiajs/react';
-import { Button } from "@heroui/react"; 
+import { Card, CardHeader, CardBody, Button, Divider, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Link, card } from "@heroui/react"; 
 
-export default function Welcome() {
+export default function Welcome({ events }) {
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100 dark:bg-gray-900">
-            <Head title="Welcome" />
+        <div className="text-foreground sm:p-8 min-h-screen mx-auto w-full max-w-4xl space-y-8">
+            <Head title="Secret Santa" />
             
-            <div className="text-center space-y-4">
-                <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
-                    TEST
-                </h1>
-                
-                <Button color="primary" size="lg" variant="shadow">
-                    Cliccami!
-                </Button>
-            </div>
+            <Card>
+                <CardHeader className="justify-between">
+                    <div className="text-3xl">
+                        <h1 className="font-bold ">Lista Eventi</h1>
+                    </div>
+                    
+                    <Link
+                        //href={route('events.create')}
+                        className='text-lg font-semibold text-emerald-500 hover:text-emerald-300'
+                    >
+                        Crea Evento
+                    </Link>
+                </CardHeader>
+
+                <Divider />
+
+                <Card className='border-none bg-content-1' radius='lg'>
+                    <CardBody className='py-12 text center'>
+                        <p className='text-default-500 text-lg'>Nessun evento presente</p>
+
+                    </CardBody>
+                </Card>
+            </Card>
         </div>
     );
 }
