@@ -72,8 +72,13 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
-    {
-        //
+    public function destroy(Event $event) {
+        $event->delete();
+
+        //dd($event->All());
+
+        return redirect()
+            ->route('events.index')
+            ->with('success', 'Evento eliminato con successo');
     }
 }

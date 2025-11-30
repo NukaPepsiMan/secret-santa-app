@@ -1,7 +1,10 @@
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head, router } from '@inertiajs/react';
 import { Card, CardHeader, CardBody, Button, Divider, Chip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, card } from "@heroui/react"; 
 
 export default function Index({ events }) {
+    const handleDelete = (id) => {
+        router.delete(route('events.destroy', id));
+    };
     return (
         <div className="text-foreground sm:p-8 min-h-screen mx-auto w-full max-w-4xl space-y-8">
             <Head title="Secret Santa" />
@@ -74,7 +77,7 @@ export default function Index({ events }) {
 
                                         <div className="flex gap-3 items-center">
                                             <Link
-                                                href={route('events.show', event.id)}
+                                                //href={route('events.show', events.id)}
                                                 className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                                             >
                                                 Dettagli
@@ -85,6 +88,7 @@ export default function Index({ events }) {
                                                 variant="solid"
                                                 radius="full"
                                                 className="font-medium"
+                                                onPress={() => handleDelete(event.id)}
                                             >
                                                 Elimina
                                             </Button>
