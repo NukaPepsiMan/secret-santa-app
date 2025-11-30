@@ -32,9 +32,17 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+
+        //dd($request->all());
+        $event = Event::create([
+            'organizer_id' => 1,
+            'name' => $request->input('name'),
+            'exchange_date' => $request->input('exchange_date'),
+            'budget' => $request->input('budget'),
+        ]);
+
+        return redirect()->route('events.index');
     }
 
     /**

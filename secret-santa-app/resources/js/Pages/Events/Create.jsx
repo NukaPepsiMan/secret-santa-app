@@ -1,7 +1,18 @@
-import { Link, Head } from '@inertiajs/react';
-import { Card, CardHeader, CardBody, Form, Input, Button, Spacer } from "@heroui/react"; 
+import { Link, Head, useForm } from '@inertiajs/react';
+import { Card, CardHeader, CardBody, Form, Input, Button, CardFooter } from "@heroui/react"; 
 
-export default function Create({ events }) {
+export default function Create({}) {
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        exchange_date: '',
+        budget: '',
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('events.store'));
+    };
+
     return (
         <>
             <Head title='Crea Evento'/>
@@ -24,64 +35,68 @@ export default function Create({ events }) {
                         </Link>
                     </CardHeader>
                     <CardBody className="px-6 py-8">
-                        <form  className="flex flex-col gap-6">
-                            <div className="flex flex-col gap-1">
-                                <label
-                                    htmlFor="event-name"
-                                    className="text-sm font-medium text-foreground"
-                                >
-                                    Nome evento
-                                </label>
-                                <Input
-                                    id="event-name"
-                                    placeholder='nome'
-                                    isRequired
-                                />
-                            </div>
+                        <Form className="grid grid-cols-[180px_1fr] gap-y-6 gap-x-4 items-center"
+                                onSubmit={handleSubmit}>
+                            <label
+                                htmlFor="event-name"
+                                className="text-sm font-medium text-foreground"
+                            >
+                                Nome evento
+                            </label>
+                            <Input 
+                                id="event-name" 
+                                placeholder='nome'
+                                value={data.name}
+                                onValueChange={(val) => setData('name', val)}
+                                isInvalid={!!errors.name}
+                                errorMessage={errors.name}
+                                isRequired 
+                            />
 
-                            <div className="flex flex-col gap-1">
-                                    <label
-                                        htmlFor="exchange-date"
-                                        className="text-sm font-medium text-foreground"
-                                    >
-                                        Data scambio regali
-                                    </label>
-                                    <Input
-                                        id="exchange-date"
-                                        type="date"
-                                        isRequired
-                                    />
-                            </div>
+                            <label
+                                htmlFor="exchange-date"
+                                className="text-sm font-medium text-foreground"
+                            >
+                                Data scambio regali
+                            </label>
+                            <Input 
+                                id="exchange-date" 
+                                type="date"
+                                value={data.exchange_date}
+                                onValueChange={(val) => setData('exchange_date', val)}
+                                isInvalid={!!errors.exchange_date}
+                                errorMessage={errors.exchange_date}
+                                isRequired 
+                            />
 
-                            <div>
-                                <div className="flex flex-col">
-                                    <label
-                                        htmlFor="budget"
-                                        className="text-sm font-medium text-foreground "
-                                    >
-                                        Budget massimo (€)
-                                    </label>
-                                    <Input
-                                        id="budget"
-                                        type="number"
-                                        min="1"
-                                        isRequired
-                                    />
-                                </div>
-                            </div>
-
-                            <Spacer y={2} />
-
+                            <label
+                                htmlFor="budget"
+                                className="text-sm font-medium text-foreground"
+                            >
+                                Budget (€)
+                            </label>
+                            <Input 
+                                id="budget"
+                                type="number"
+                                min="1"
+                                placeholder='€' 
+                                value={data.budget}
+                                onValueChange={(val) => setData('budget', val)}
+                                isInvalid={!!errors.budget}
+                                errorMessage={errors.budget}
+                                isRequired
+                            />
                             <Button
                                 type="submit"
                                 color="success"
                                 radius="full"
                                 fullWidth
-                                className="font-bold shadow-lg"
+                                className="font-bold shadow-lg col-span-2"
+                                isLoading={processing}
                             >
                                 Crea evento
                             </Button>
-                        </form>
+                        </Form>
                     </CardBody>
                 </Card>
             </div>
