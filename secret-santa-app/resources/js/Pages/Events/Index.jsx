@@ -77,7 +77,7 @@ export default function Index({ events }) {
 
                                         <div className="flex gap-3 items-center">
                                             <Link
-                                                //href={route('events.show', events.id)}
+                                                href={route('events.show', event.id)}
                                                 className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                                             >
                                                 Dettagli

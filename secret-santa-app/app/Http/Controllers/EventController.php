@@ -50,7 +50,22 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event->load([
+            'participants.user',
+            'participants.givenAssignment',
+        ]);
+
+        return Inertia::render('Events/Show', [
+            'event' => $event,
+            'participant' => $event->participants->map(function($participant) {
+                return [
+                    'id' => $participant->id,
+                    'name' => $participant->user->name,
+                    'email' => $participant->user->email,
+                    'status' => $participant->status,
+                ];
+            })
+        ]);
     }
 
     /**
