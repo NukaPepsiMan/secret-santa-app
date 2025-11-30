@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    Route::patch('/participants/{participant}', [ParticipantController::class, 'update'])
+        ->name('participants.update');
+
+    Route::delete('/participants/{participant}', [ParticipantController::class, 'destroy'])
+        ->name('participants.destroy');
 });
 
 Route::resource('events', EventController::class)->only([

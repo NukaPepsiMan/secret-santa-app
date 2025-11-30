@@ -1,6 +1,14 @@
 import { Link, Head, router } from '@inertiajs/react';
 
 export default function Show({ event, participants }) {
+    const handleRemoveParticipant = (id) => {
+        router.delete(route('participants.destroy', id));
+    };
+
+    const handleUpdateStatus = (participantId, status) => {
+        router.patch(route('participants.update', participantId), { status });
+    };
+
     return (
         <>
             <Head title={`Partecipanti - ${event.name}`} />
@@ -86,31 +94,48 @@ export default function Show({ event, participants }) {
                                             </td>
                                             <td className="px-6 py-3 align-middle">
                                                 <div className="flex justify-center gap-2">
-                                                        <>
-                                                            <button
-                                                                type="button"
-                                                                className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
-                                                            >
-                                                                Rimuovi
-                                                            </button>
-                                                            {participant.status ===
-                                                                'pending' && (
-                                                                <>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
-                                                                    >
-                                                                        Accetta
-                                                                    </button>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-500 hover:bg-amber-500/30"
-                                                                    >
-                                                                        Rifiuta
-                                                                    </button>
-                                                                </>
-                                                            )}
-                                                        </>
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                handleRemoveParticipant(
+                                                                    participant.id,
+                                                                )
+                                                            }
+                                                            className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
+                                                        >
+                                                            Rimuovi
+                                                        </button>
+                                                        {participant.status ===
+                                                            'pending' && (
+                                                            <>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        handleUpdateStatus(
+                                                                            participant.id,
+                                                                            'accepted',
+                                                                        )
+                                                                    }
+                                                                    className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
+                                                                >
+                                                                    Accetta
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        handleUpdateStatus(
+                                                                            participant.id,
+                                                                            'rejected',
+                                                                        )
+                                                                    }
+                                                                    className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-500 hover:bg-amber-500/30"
+                                                                >
+                                                                    Rifiuta
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                    </>
                                                 </div>
                                             </td>
                                         </tr>
