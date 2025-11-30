@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
-import { Card, CardHeader, CardBody, Form, Input, Button, Link, Spacer } from "@heroui/react"; 
+import { Link, Head } from '@inertiajs/react';
+import { Card, CardHeader, CardBody, Form, Input, Button, Spacer } from "@heroui/react"; 
 
 export default function Create({ events }) {
     return (
@@ -17,7 +17,7 @@ export default function Create({ events }) {
                             </p>
                         </div>
                         <Link
-                            
+                            href={route('events.index')}
                             className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                         >
                             Torna alla lista

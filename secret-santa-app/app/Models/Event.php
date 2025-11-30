@@ -14,6 +14,7 @@ class Event extends Model
         'organizer_id',
         'name',
         'exchange_date',
+        'budget',
         'drawn_at',
     ];
 

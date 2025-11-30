@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
-import { Card, CardHeader, CardBody, Button, Divider, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Link, card } from "@heroui/react"; 
+import { Link, Head } from '@inertiajs/react';
+import { Card, CardHeader, CardBody, Button, Divider, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, card } from "@heroui/react"; 
 
 export default function Index({ events }) {
     return (
@@ -13,7 +13,7 @@ export default function Index({ events }) {
                     </div>
                     
                     <Link
-                        //href={route('events.create')}
+                        href={route('events.create')}
                         className='text-lg font-semibold text-emerald-500 hover:text-emerald-300'
                     >
                         Crea Evento

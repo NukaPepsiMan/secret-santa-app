@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $events = Event::query()
+            ->orderBy('exchange_date')
+            ->get();
+        
+        return Inertia::render('Events/Index', [
+            'events' => $events,
+        ]);
     }
 
     /**
@@ -20,7 +26,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render(('Events/Create'));
     }
 
     /**
