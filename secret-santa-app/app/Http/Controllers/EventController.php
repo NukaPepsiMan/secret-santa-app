@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,9 +27,33 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         return Inertia::render(('Events/Create'));
+    }
+    
+    public function myEvents() {
+            $user = Auth::user();
+    
+            $participants = Participant::with('event')
+                ->where('user_id', $user->id)
+                ->get();
+
+            //dd($participants->all());
+    
+            return Inertia::render('Participants/Index', [
+                'userEvents' => $participants->map(function ($p) {
+                    return [
+                        'id' => $p->id,
+                        'status' => $p->status,
+                        'event' => [
+                            'id' => $p->event->id,
+                            'name' => $p->event->name,
+                            'exchange_date' => $p->event->exchange_date,
+                            'budget' => $p->event->budget,
+                        ]
+                    ];
+                }),
+            ]);
     }
 
     /**

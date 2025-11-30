@@ -25,7 +25,7 @@ export default function Index({ events }) {
                         </div>
                         <div className="flex items-center gap-4">
                             <Link
-                                href={route('events.index')}
+                                href={route('events.my-events')}
                                 className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                             >
                                 Miei Eventi
