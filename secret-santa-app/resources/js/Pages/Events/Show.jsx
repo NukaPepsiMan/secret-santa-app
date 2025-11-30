@@ -104,7 +104,7 @@ export default function Show({ event, participants }) {
                                                                     </button>
                                                                     <button
                                                                         type="button"
-                                                                        className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-300 hover:bg-amber-500/30"
+                                                                        className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-500 hover:bg-amber-500/30"
                                                                     >
                                                                         Rifiuta
                                                                     </button>

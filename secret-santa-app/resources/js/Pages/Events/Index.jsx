@@ -1,104 +1,105 @@
-import { Link, Head, router } from '@inertiajs/react';
-import { Card, CardHeader, CardBody, Button, Divider, Chip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, card } from "@heroui/react"; 
+import { Head, Link, router } from '@inertiajs/react';
 
 export default function Index({ events }) {
     const handleDelete = (id) => {
+        if (!window.confirm('Vuoi davvero eliminare questo evento?')) {
+            return;
+        }
+
         router.delete(route('events.destroy', id));
     };
+
     return (
-        <div className="text-foreground sm:p-8 min-h-screen mx-auto w-full max-w-4xl space-y-8">
-            <Head title="Secret Santa" />
-            
-            <Card>
-                <CardHeader className="justify-between">
-                    <div className="text-3xl">
-                        <h1 className="font-bold ">Lista Eventi</h1>
+        <>
+            <Head title="Lista Eventi" />
+            <div className="min-h-screen bg-background p-4 sm:p-8">
+                <div className="mx-auto w-full max-w-4xl space-y-6">
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <h1 className="text-2xl font-semibold text-foreground">
+                                I tuoi eventi
+                            </h1>
+                            <p className="mt-1 text-sm text-default-500">
+                                Crea e gestisci gli eventi Secret Santa.
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <Link
+                                href={route('events.index')}
+                                className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                            >
+                                Miei Eventi
+                            </Link>
+
+                            <Link
+                                href={route('events.create')}
+                                className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                            >
+                                Crea evento
+                            </Link>
+                        </div>
                     </div>
-                    
-                    <Link
-                        href={route('events.create')}
-                        className='text-lg font-semibold text-emerald-500 hover:text-emerald-300'
-                    >
-                        Crea Evento
-                    </Link>
-                </CardHeader>
 
-                <Divider />
-
-                {events.length === 0 ? (
-                    <Card className='border-none bg-content-1' radius='lg'>
-                        <CardBody className='py-12 text center'>
-                            <p className='text-default-500 text-lg'>Nessun evento presente</p>
-    
-                        </CardBody>
-                    </Card>
+                    {events.length === 0 ? (
+                        <div className="rounded-lg border border-dashed border-divider bg-content1 py-10 px-4 text-center space-y-2">
+                            <p className="text-base font-medium text-foreground">
+                                Nessun evento presente.
+                            </p>
+                            <p className="text-sm text-default-500">
+                                Crea il tuo primo evento per iniziare.
+                            </p>
+                        </div>
                     ) : (
-                        <div className="grid grid-cols-1 gap-6">
+                        <div className="space-y-4">
                             {events.map((event) => (
-                                <Card
+                                <div
                                     key={event.id}
-                                    className="border-none hover:bg-content2 transition-colors"
-                                    radius="lg"
+                                    className="flex flex-col gap-3 rounded-lg border border-divider bg-content1 px-4 py-4 md:px-6 md:py-5 md:flex-row md:items-center md:justify-between"
                                 >
-                                    <CardBody className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6">
-                                        <div className="flex flex-col gap-2">
-                                            <h3 className="text-xl font-bold text-foreground">
-                                                {event.name}
-                                            </h3>
-                                            <div className="flex flex-wrap gap-2">
-                                                <Chip
-                                                    size="sm"
-                                                    variant="flat"
-                                                    color="success"
-                                                    radius="full"
-                                                >
-                                                    Budget: € {event.budget}
-                                                </Chip>
-                                                <Chip
-                                                    size="sm"
-                                                    variant="flat"
-                                                    color="default"
-                                                    radius="full"
-                                                >
-                                                    Scambio: {event.exchange_date}
-                                                </Chip>
-                                                {event.drawn_at && (
-                                                    <Chip
-                                                        size="sm"
-                                                        variant="flat"
-                                                        color="primary"
-                                                        radius="full"
-                                                    >
-                                                        Estrazione completata
-                                                    </Chip>
-                                                )}
-                                            </div>
+                                    <div className="space-y-1">
+                                        <h2 className="text-lg font-semibold text-foreground">
+                                            {event.name}
+                                        </h2>
+                                        <div className="flex flex-wrap gap-2 text-sm">
+                                            <span className="inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs text-emerald-400">
+                                                Budget: €{event.budget}
+                                            </span>
+                                            <span className="inline-flex rounded-full">
+                                                Scambio: {event.exchange_date}
+                                            </span>
+                                            {event.drawn_at && (
+                                                <span className="inline-flex rounded-full bg-sky-500/10 px-3 py-1 text-xs text-sky-400">
+                                                    Estrazione completata
+                                                </span>
+                                            )}
                                         </div>
+                                    </div>
 
-                                        <div className="flex gap-3 items-center">
-                                            <Link
-                                                href={route('events.show', event.id)}
-                                                className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
-                                            >
-                                                Dettagli
-                                            </Link>
-                                            <Button
-                                                size="sm"
-                                                color="danger"
-                                                variant="solid"
-                                                radius="full"
-                                                className="font-medium"
-                                                onPress={() => handleDelete(event.id)}
+                                    <div className="flex items-center gap-2">
+                                        <Link
+                                            href={route('events.show', event.id)}
+                                            className="text-sm font-medium text-emerald-500 hover:text-emerald-400"
+                                        >
+                                            Dettagli
+                                        </Link>
+                                        {!event.drawn_at && (
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDelete(event.id)}
+                                                className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
                                             >
                                                 Elimina
-                                            </Button>
-                                        </div>
-                                    </CardBody>
-                                </Card>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     )}
-            </Card>
-        </div>
+                </div>
+            </div>
+        </>
     );
 }
+
+
