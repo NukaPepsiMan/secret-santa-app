@@ -20,7 +20,10 @@ createInertiaApp({
         const root = createRoot(el);
 
         root.render(
-            <HeroUIProvider navigate={router.visit}>
+            <HeroUIProvider 
+                navigate={router.visit} 
+                className='dark text-foreground bg-background'
+            >
                 <App {...props} />
             </HeroUIProvider>
         );
