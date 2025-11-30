@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { Card, CardHeader, CardBody, Button, Divider, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Link, card } from "@heroui/react"; 
 
-export default function Welcome({ events }) {
+export default function Index({ events }) {
     return (
         <div className="text-foreground sm:p-8 min-h-screen mx-auto w-full max-w-4xl space-y-8">
             <Head title="Secret Santa" />
