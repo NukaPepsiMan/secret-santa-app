@@ -57,7 +57,7 @@ class EventController extends Controller
 
         return Inertia::render('Events/Show', [
             'event' => $event,
-            'participant' => $event->participants->map(function($participant) {
+            'participants' => $event->participants->map(function($participant) {
                 return [
                     'id' => $participant->id,
                     'name' => $participant->user->name,
