@@ -4,6 +4,7 @@ use App\Models\Event;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishlistItemController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,6 +46,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-events', [EventController::class, 'myEvents'])
         ->name('events.my-events');
+    
+    Route::get('/participants/{participant}/wishlist', [WishlistItemController::class, 'index'])
+        ->name('wishlist.index');
 });
 
 Route::resource('events', EventController::class)->only([

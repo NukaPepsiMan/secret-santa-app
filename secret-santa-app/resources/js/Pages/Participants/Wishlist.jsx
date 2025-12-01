@@ -1,0 +1,131 @@
+import { Head, Link, useForm, router } from '@inertiajs/react';
+
+export default function Wishlist({ participantId, event, wishlistItems }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        description: '',
+    });
+
+    return (
+        <>
+            <Head title={`Wishlist - ${event.name}`} />
+            <div className="min-h-screen bg-background p-4 sm:p-8">
+                <div className="mx-auto w-full max-w-4xl space-y-8">
+                    <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+                        <div>
+                            <h1 className="text-3xl font-bold text-foreground">
+                                La mia wishlist
+                            </h1>
+                            <p className="text-default-500">
+                                Evento: {' '}
+                                <span className="font-semibold text-foreground">
+                                    {event.name}
+                                </span>{' '}
+                                • Budget: {' '}
+                                <span className="font-semibold text-success">
+                                    €{event.budget}
+                                </span>
+                            </p>
+                        </div>
+                        <Link
+                            href={route('events.my-events')}
+                            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                        >
+                            Torna ai miei eventi
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3">
+                        <div className="md:col-span-1 rounded-lg border border-divider bg-content1">
+                            <div className="px-6 pt-6 pb-0">
+                                <h3 className="text-xl font-bold text-foreground">
+                                    Aggiungi desiderio
+                                </h3>
+                            </div>
+                            <div className="flex flex-col gap-4 p-6">
+                                <form
+                                    className="flex flex-col gap-4"
+                                >
+                                    <div className="flex flex-col gap-1 text-sm">
+                                        <label
+                                            htmlFor="wishlist-name"
+                                            className="font-medium text-foreground"
+                                        >
+                                            Oggetto
+                                        </label>
+                                        <input
+                                            id="wishlist-name"
+                                            type="text"
+                                            value={data.name}
+                                            onChange={(e) => setData('name', e.target.value)}
+                                            placeholder="Cosa ti piacerebbe ricevere?"
+                                            className={`w-full rounded-md border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-default-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+                                                errors.name
+                                                    ? 'border-red-500 text-red-200'
+                                                    : 'border-divider'
+                                            }`}
+                                        />
+                                        {errors.name && (
+                                            <p className="text-xs text-red-400">
+                                                {errors.name}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="flex flex-col gap-1 text-sm">
+                                        <label
+                                            htmlFor="wishlist-description"
+                                            className="font-medium text-foreground"
+                                        >
+                                            Note / Link
+                                        </label>
+                                        <textarea
+                                            id="wishlist-description"
+                                            rows={3}
+                                            value={data.description}
+                                            onChange={(e) =>
+                                                setData('description', e.target.value)
+                                            }
+                                            placeholder="Descrizione, link al prodotto..."
+                                            className={`w-full rounded-md border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-default-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+                                                errors.description
+                                                    ? 'border-red-500 text-red-200'
+                                                    : 'border-divider'
+                                            }`}
+                                        />
+                                        {errors.description && (
+                                            <p className="text-xs text-red-400">
+                                                {errors.description}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="rounded-full px-4 py-2 text-sm font-semibold
+                                             text-white bg-emerald-600 hover:bg-emerald-700"      
+                                    >
+                                        {processing ? 'Salvataggio...' : 'Aggiungi alla lista'}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div className="md:col-span-2 space-y-4">
+                            <div className="rounded-lg border-2 border-dashed border-divider py-12 text-center space-y-2 px-4">
+                                    <p className="text-lg font-semibold text-foreground">
+                                        La tua lista è vuota
+                                    </p>
+                                    <p className="text-default-500">
+                                        Aggiungi gli oggetti che desideri ricevere.
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+
