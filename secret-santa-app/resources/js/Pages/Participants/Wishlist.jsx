@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Head, Link, useForm, router } from '@inertiajs/react';
 
 export default function Wishlist({ participantId, event, wishlistItems }) {
@@ -14,6 +15,16 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
     
     const handleDelete = (deleteItem) => {
         router.delete(route('wishlist.destroy', deleteItem.id));
+    };
+
+    const [editingItem, setEditingItem] = useState(null);
+    const [editForm, setEditForm] = useState({ name: '', description: '' });
+    const canEdit = editForm.name.trim().length > 0;
+
+    const handleEditSave = () => {
+        router.patch(route('wishlist.update', editingItem.id), editForm, {
+            onFinish: () => setEditingItem(null),
+        });
     };
 
     return (
@@ -152,7 +163,7 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
                                         <div className="flex flex-col gap-2">
                                             <button
                                                 type="button"
-                                                onClick={() => handleEditClick(item)}
+                                                onClick={() => setEditingItem(item)}
                                                 className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
                                             >
                                                 Modifica
@@ -169,6 +180,79 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
                                 ))
                             )}
                         </div>
+
+                        {editingItem && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+                            <div className="w-full max-w-md rounded-xl border border-zinc-700 bg-zinc-900 p-6 shadow-xl">
+                                <h2 className="mb-2 text-lg font-semibold text-foreground">
+                                    Modifica Regalo
+                                </h2>
+                                <div className="space-y-4">
+                                    <div className="flex flex-col gap-1 text-sm">
+                                        <label
+                                            htmlFor="edit-name"
+                                            className="font-medium text-foreground"
+                                        >
+                                            Oggetto
+                                        </label>
+                                        <input
+                                            id="edit-name"
+                                            type="text"
+                                            value={editForm.name}
+                                            onChange={(e) =>
+                                                setEditForm((prev) => ({
+                                                    ...prev,
+                                                    name: e.target.value,
+                                                }))
+                                            }
+                                            className="w-full rounded-md border border-divider bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-default-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1 text-sm">
+                                        <label
+                                            htmlFor="edit-description"
+                                            className="font-medium text-foreground"
+                                        >
+                                            Note / Link
+                                        </label>
+                                        <textarea
+                                            id="edit-description"
+                                            rows={3}
+                                            value={editForm.description}
+                                            onChange={(e) =>
+                                                setEditForm((prev) => ({
+                                                    ...prev,
+                                                    description: e.target.value,
+                                                }))
+                                            }
+                                            className="w-full rounded-md border border-divider bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-default-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-6 flex justify-end gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingItem(null)}
+                                        className="rounded-full px-4 py-2 text-sm font-medium text-default-200 hover:bg-zinc-800"
+                                    >
+                                        Annulla
+                                    </button>
+                                    <button
+                                        type="button"
+                                        disabled={!canEdit}
+                                        onClick={handleEditSave}
+                                        className={`rounded-full px-4 py-2 text-sm font-semibold text-white ${
+                                            canEdit
+                                                ? 'bg-emerald-600 hover:bg-emerald-700'
+                                                : 'bg-emerald-800/40 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        Salva modifiche
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
 
                     </div>

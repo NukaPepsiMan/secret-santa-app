@@ -1,4 +1,4 @@
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 
 export default function Index({ userEvents }) {
 
@@ -72,7 +72,7 @@ export default function Index({ userEvents }) {
                                                 Dettagli evento
                                             </Link>
                                             <Link
-                                                //href={route('wishlist.index', item.id)}
+                                                href={route('wishlist.index', item.id)}
                                                 className="font-medium text-emerald-500 hover:text-emerald-400"
                                             >
                                                 Gestisci wishlist

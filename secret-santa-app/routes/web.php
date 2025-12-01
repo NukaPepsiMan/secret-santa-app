@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/participants/{participant}/wishlist', [WishlistItemController::class, 'store'])
         ->name('wishlist.store');
 
+    Route::patch('/wishlist-items/{wishlistItem}', [WishlistItemController::class, 'update'])
+        ->name('wishlist.update');
+
     Route::delete('/wishlist-items/{wishlistItem}', [WishlistItemController::class, 'destroy'])
         ->name('wishlist.destroy');
 

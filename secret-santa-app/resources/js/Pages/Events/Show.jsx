@@ -97,11 +97,7 @@ export default function Show({ event, participants }) {
                                                     <>
                                                         <button
                                                             type="button"
-                                                            onClick={() =>
-                                                                handleRemoveParticipant(
-                                                                    participant.id,
-                                                                )
-                                                            }
+                                                            onClick={() => handleRemoveParticipant( participant.id,) }
                                                             className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
                                                         >
                                                             Rimuovi
@@ -111,12 +107,7 @@ export default function Show({ event, participants }) {
                                                             <>
                                                                 <button
                                                                     type="button"
-                                                                    onClick={() =>
-                                                                        handleUpdateStatus(
-                                                                            participant.id,
-                                                                            'accepted',
-                                                                        )
-                                                                    }
+                                                                    onClick={() => handleUpdateStatus( participant.id, 'accepted',)}
                                                                     className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
                                                                 >
                                                                     Accetta
@@ -124,10 +115,7 @@ export default function Show({ event, participants }) {
                                                                 <button
                                                                     type="button"
                                                                     onClick={() =>
-                                                                        handleUpdateStatus(
-                                                                            participant.id,
-                                                                            'rejected',
-                                                                        )
+                                                                        handleUpdateStatus( participant.id, 'rejected', )
                                                                     }
                                                                     className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-500 hover:bg-amber-500/30"
                                                                 >

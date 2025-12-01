@@ -2,10 +2,6 @@ import { Head, Link, router } from '@inertiajs/react';
 
 export default function Index({ events }) {
     const handleDelete = (id) => {
-        if (!window.confirm('Vuoi davvero eliminare questo evento?')) {
-            return;
-        }
-
         router.delete(route('events.destroy', id));
     };
 

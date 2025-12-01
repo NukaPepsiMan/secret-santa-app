@@ -40,10 +40,18 @@ class WishlistitemController extends Controller
         return back()->with('success','Oggetto aggiunto alla wishlist.');
     }
 
+    public function update(StoreWishlistitemRequest $request, WishlistItem $wishlistItem) {
+
+        $validated = $request->validated();
+        $wishlistItem->update($validated);
+
+        return back()->with('success','Oggetto aggiornato.');
+    }
+
     public function destroy(WishlistItem $wishlistItem) {
 
         $wishlistItem->delete();
-        
+
         return back()->with('success','Oggetto rimosso dalla wishlist.');
     }
 }
