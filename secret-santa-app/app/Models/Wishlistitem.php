@@ -13,6 +13,7 @@ class Wishlistitem extends Model
     protected $fillable = [
         'participant_id',
         'name',
+        'description',
     ];
 
     public function participant() {

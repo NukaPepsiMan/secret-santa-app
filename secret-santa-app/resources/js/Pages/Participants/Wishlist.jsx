@@ -1,10 +1,20 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
 
 export default function Wishlist({ participantId, event, wishlistItems }) {
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         description: '',
     });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('wishlist.store', participantId));
+    };
+    
+    const handleDelete = (deleteItem) => {
+        router.delete(route('wishlist.destroy', deleteItem.id));
+    };
 
     return (
         <>
@@ -44,6 +54,7 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
                             </div>
                             <div className="flex flex-col gap-4 p-6">
                                 <form
+                                    onSubmit={handleSubmit}
                                     className="flex flex-col gap-4"
                                 >
                                     <div className="flex flex-col gap-1 text-sm">
@@ -112,15 +123,54 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
                         </div>
 
                         <div className="md:col-span-2 space-y-4">
-                            <div className="rounded-lg border-2 border-dashed border-divider py-12 text-center space-y-2 px-4">
+                            {wishlistItems.length === 0 ? (
+                                <div className="rounded-lg border-2 border-dashed border-divider py-12 text-center space-y-2 px-4">
                                     <p className="text-lg font-semibold text-foreground">
                                         La tua lista è vuota
                                     </p>
                                     <p className="text-default-500">
-                                        Aggiungi gli oggetti che desideri ricevere.
+                                        Aggiungi qualche idea per aiutare chi dovrà farti il
+                                        regalo.
                                     </p>
-                            </div>
+                                </div>
+                            ) : (
+                                wishlistItems.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex flex-row items-start justify-between gap-4 rounded-lg border border-divider bg-content1 p-5 shadow-sm"
+                                    >
+                                        <div className="flex w-full flex-col gap-2">
+                                            <h4 className="text-lg font-bold text-foreground">
+                                                {item.name}
+                                            </h4>
+                                            {item.description && (
+                                                <p className="rounded-md bg-content3/30 p-2 text-sm text-default-600">
+                                                    {item.description}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleEditClick(item)}
+                                                className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
+                                            >
+                                                Modifica
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDelete(item)}
+                                                className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
+                                            >
+                                                Elimina
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
+
+
                     </div>
                 </div>
             </div>

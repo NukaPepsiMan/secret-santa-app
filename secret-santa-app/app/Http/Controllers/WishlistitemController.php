@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWishlistitemRequest;
 use App\Models\Participant;
 use App\Models\WishlistItem;
 use Illuminate\Http\Request;
@@ -29,5 +30,20 @@ class WishlistitemController extends Controller
                 ];
             }),
         ]);
+    }
+    
+    public function store(StoreWishlistitemRequest $request, Participant $participant) {
+
+        $validated = $request->validated();
+        $participant->wishlistItems()->create($validated);
+
+        return back()->with('success','Oggetto aggiunto alla wishlist.');
+    }
+
+    public function destroy(WishlistItem $wishlistItem) {
+
+        $wishlistItem->delete();
+        
+        return back()->with('success','Oggetto rimosso dalla wishlist.');
     }
 }

@@ -49,6 +49,13 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/participants/{participant}/wishlist', [WishlistItemController::class, 'index'])
         ->name('wishlist.index');
+    
+    Route::post('/participants/{participant}/wishlist', [WishlistItemController::class, 'store'])
+        ->name('wishlist.store');
+
+    Route::delete('/wishlist-items/{wishlistItem}', [WishlistItemController::class, 'destroy'])
+        ->name('wishlist.destroy');
+
 });
 
 Route::resource('events', EventController::class)->only([
