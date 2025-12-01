@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Event;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
@@ -8,11 +9,14 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $events = Event::All();
+    
     return Inertia::render('Events/Index', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'events' => $events,
     ]);
 });
 
