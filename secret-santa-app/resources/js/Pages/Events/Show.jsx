@@ -1,7 +1,13 @@
 import { Link, Head, router } from '@inertiajs/react';
 
-export default function Show({ event, participants }) {
-    const handleRemoveParticipant = (id) => {
+export default function Show({ event, 
+    participants, 
+    canDraw, 
+    pendingCount, 
+    acceptedCount
+ }) {
+    
+        const handleRemoveParticipant = (id) => {
         router.delete(route('participants.destroy', id));
     };
 
@@ -35,6 +41,28 @@ export default function Show({ event, participants }) {
                         >
                             Torna agli eventi
                         </Link>
+                    </div>
+
+                    <div className="rounded-lg border border-divider bg-content1 p-6 flex flex-col items-center justify-between gap-6 md:flex-row">
+                        <div className="flex w-full justify-around gap-6 md:w-auto md:justify-start">
+                            <div className="flex flex-col items-center md:items-start">
+                                <span className="text-2xl font-bold text-emerald-400">
+                                    {acceptedCount}
+                                </span>
+                                <span className="text-xs uppercase tracking-wider text-default-500">
+                                    Accettati
+                                </span>
+                            </div>
+                            <div className="flex flex-col items-center md:items-start">
+                                <span className="text-2xl font-bold text-amber-400">
+                                    {pendingCount}
+                                </span>
+                                <span className="text-xs uppercase tracking-wider text-default-500">
+                                    In attesa
+                                </span>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div className="rounded-lg border border-divider bg-content1">

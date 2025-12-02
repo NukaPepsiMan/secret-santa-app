@@ -88,7 +88,20 @@ class EventController extends Controller
     {
         $event->load([
             'participants.user',
+            'participants.givenAssignment',
         ]);
+
+        $pendingCount = $event->participants()
+            ->where('status', 'pending')
+            ->count();
+
+        $acceptedCount = $event->participants()
+            ->where('status', 'accepted')
+            ->count();
+
+        $canDraw = $event->drawn_at === null
+            && $pendingCount === 0
+            && $acceptedCount >= 3;
 
         return Inertia::render('Events/Show', [
             'event' => $event,
@@ -97,9 +110,12 @@ class EventController extends Controller
                     'id' => $participant->id,
                     'name' => $participant->user->name,
                     'email' => $participant->user->email,
-                    'status' => $participant->status,
+                    'status' => $participant->status
                 ];
-            })
+            }),
+            'canDraw' => $canDraw,
+            'pendingCount' => $pendingCount,
+            'acceptedCount' => $acceptedCount,
         ]);
     }
 
