@@ -28,11 +28,11 @@ class Participant extends Model
         return $this->hasMany(WishlistItem::class);
     }
 
-    public function giver() {
-        return $this->belongsTo(Participant::class, 'giver_participant_id');
+    public function givenAssignment() {
+        return $this->hasOne(Assignment::class, 'giver_participant_id');
     }
 
-    public function receiver() {
-        return $this->belongsTo(Participant::class, 'receiver_participant_id');
+    public function receivedAssignment() {
+        return $this->hasOne(Assignment::class, 'receiver_participant_id');
     }
 }
