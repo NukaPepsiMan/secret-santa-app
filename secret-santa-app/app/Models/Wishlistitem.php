@@ -17,6 +17,6 @@ class Wishlistitem extends Model
     ];
 
     public function participant() {
-        return $this -> belongsTo(Participant::class);
+        return $this->belongsTo(Participant::class);
     }
 }

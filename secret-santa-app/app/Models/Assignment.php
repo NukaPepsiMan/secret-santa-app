@@ -5,27 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Participant extends Model
+class Assignment extends Model
 {
-    /** @use HasFactory<\Database\Factories\ParticipantFactory> */
+    /** @use HasFactory<\Database\Factories\AssignmentFactory> */
     use HasFactory;
 
     protected $fillable = [
         'event_id',
-        'user_id',
-        'status',
+        'giver_participant_id',
+        'receiver_participant_id',
+        'viewed_at',
     ];
 
     public function event() {
         return $this->belongsTo(Event::class);
-    }
-    
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
-
-    public function wishlistItems() {
-        return $this->hasMany(WishlistItem::class);
     }
 
     public function giver() {
