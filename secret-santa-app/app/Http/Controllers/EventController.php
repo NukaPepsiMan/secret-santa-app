@@ -53,7 +53,8 @@ class EventController extends Controller
                             'name' => $p->event->name,
                             'exchange_date' => $p->event->exchange_date,
                             'budget' => $p->event->budget,
-                        ]
+                        ],
+                        'can_view_assignment' => $p->givenAssignment,
                     ];
                 }),
             ]);

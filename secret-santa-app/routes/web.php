@@ -5,6 +5,7 @@ use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistItemController;
+use App\Http\Controllers\AssignmentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,8 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/participants/{participant}', [ParticipantController::class, 'destroy'])
         ->name('participants.destroy');
 
-    Route::get('/my-events', [EventController::class, 'myEvents'])
-        ->name('events.my-events');
+    Route::get('/assignments/{assignment}', [AssignmentController::class, 'show'])
+        ->name('assignments.show');
     
     Route::get('/participants/{participant}/wishlist', [WishlistItemController::class, 'index'])
         ->name('wishlist.index');
@@ -58,6 +59,9 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/wishlist-items/{wishlistItem}', [WishlistItemController::class, 'destroy'])
         ->name('wishlist.destroy');
+
+    Route::get('/my-events', [EventController::class, 'myEvents'])
+        ->name('events.my-events');
 
     Route::post('/events/{event}/draw', [EventController::class, 'draw'])
         ->name('events.draw');

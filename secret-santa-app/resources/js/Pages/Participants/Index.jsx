@@ -77,6 +77,17 @@ export default function Index({ userEvents }) {
                                             >
                                                 Gestisci wishlist
                                             </Link>
+                                            {item.can_view_assignment && (
+                                                <Link
+                                                    href={route(
+                                                        'assignments.show',
+                                                        item.can_view_assignment.id,
+                                                    )}
+                                                    className="font-medium text-emerald-500 hover:text-emerald-400"
+                                                >
+                                                    Vedi assegnazione
+                                                </Link>
+                                            )}
                                         </div>
 
                                         <div className="flex flex-wrap justify-end gap-2">

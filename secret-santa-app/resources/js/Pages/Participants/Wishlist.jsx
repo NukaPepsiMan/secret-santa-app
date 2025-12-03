@@ -239,7 +239,6 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
                                     </button>
                                     <button
                                         type="button"
-                                        disabled={!canEdit}
                                         onClick={handleEditSave}
                                         className={`rounded-full px-4 py-2 text-sm font-semibold text-white ${
                                             canEdit
