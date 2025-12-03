@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\StoreEventRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -66,9 +68,10 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(StoreEventRequest $request) {
 
         //dd($request->all());
+
         $event = Event::create([
             'organizer_id' =>  Auth::id(),
             'name' => $request->input('name'),
