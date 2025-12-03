@@ -197,13 +197,18 @@ export default function Show({ event,
                                             <td className="px-6 py-3 align-middle">
                                                 <div className="flex justify-center gap-2">
                                                     <>
-                                                        <button
+                                                        {!drawnAt ? (
+                                                            <button
                                                             type="button"
                                                             onClick={() => handleRemoveParticipant( participant.id,) }
                                                             className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
                                                         >
                                                             Rimuovi
                                                         </button>
+                                                        ) : (
+                                                            <span className="text-default-300 ">-</span>
+                                                        )}
+                                                        
                                                         {participant.status ===
                                                             'pending' && (
                                                             <>
