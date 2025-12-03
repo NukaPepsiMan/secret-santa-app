@@ -3,11 +3,23 @@ import { Head, Link, router } from '@inertiajs/react';
 export default function Index({ userEvents }) {
 
     const handleRespond = (participantId, status) => {
-        router.patch(route('participants.respond', participantId), { status });
+        router.patch(route('participants.update', participantId), { status }, {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     const handleLeave = (participantId) => {
-        router.delete(route('participants.destroy', participantId));
+        router.delete(route('participants.destroy', participantId), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     return (
@@ -102,7 +114,7 @@ export default function Index({ userEvents }) {
                                                     </button>
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleRespond(item.id, 'accepted')}
+                                                        onClick={() => handleRespond(item.id, 'rejected')}
                                                         className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-300 hover:bg-amber-500/30"
                                                     >
                                                         Rifiuta

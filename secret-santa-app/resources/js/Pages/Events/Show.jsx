@@ -176,7 +176,23 @@ export default function Show({ event,
                                                     {participant.status}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-3 align-top">
+                                            <td className="px-16 py-3 align-top">
+                                                {drawnAt &&
+                                                    participant.status === 'accepted' ? (
+                                                        <span
+                                                            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                                                                participant.has_viewed_assignment
+                                                                    ? 'bg-emerald-500/10 text-emerald-400'
+                                                                    : 'bg-zinc-700 text-default-500'
+                                                            }`}
+                                                        >
+                                                            {participant.has_viewed_assignment
+                                                                ? 'Sì'
+                                                                : 'No'}
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-default-300 ">-</span>
+                                                    )}
                                             </td>
                                             <td className="px-6 py-3 align-middle">
                                                 <div className="flex justify-center gap-2">

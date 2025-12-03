@@ -16,6 +16,11 @@ class AssignmentController extends Controller
             'receiver.wishlistItems',
         ]);
 
+        if ($assignment->viewed_at === null) {
+            $assignment->update(['viewed_at' => now()]);
+            $assignment->refresh();
+        }
+
         $receiver = $assignment->receiver;
 
         return Inertia::render('Participants/Assignment', [

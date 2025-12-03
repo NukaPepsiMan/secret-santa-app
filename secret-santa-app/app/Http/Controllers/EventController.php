@@ -54,7 +54,10 @@ class EventController extends Controller
                             'exchange_date' => $p->event->exchange_date,
                             'budget' => $p->event->budget,
                         ],
-                        'can_view_assignment' => $p->givenAssignment,
+                        'can_view_assignment' => $p->givenAssignment ? [
+                            'id' => $p->givenAssignment->id,
+                            'viewed_at' => $p->givenAssignment->viewed_at,
+                        ] : null,
                     ];
                 }),
             ]);
@@ -110,7 +113,8 @@ class EventController extends Controller
                     'id' => $participant->id,
                     'name' => $participant->user->name,
                     'email' => $participant->user->email,
-                    'status' => $participant->status
+                    'status' => $participant->status,
+                    'has_viewed_assignment' => $participant->givenAssignment?->viewed_at !== null,
                 ];
             }),
             'pendingCount' => $pendingCount,
