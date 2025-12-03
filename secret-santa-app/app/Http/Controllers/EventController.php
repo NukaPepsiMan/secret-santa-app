@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Event;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Participant;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Assignment;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -63,7 +66,7 @@ class EventController extends Controller
 
         //dd($request->all());
         $event = Event::create([
-            'organizer_id' => 1,
+            'organizer_id' =>  Auth::id(),
             'name' => $request->input('name'),
             'exchange_date' => $request->input('exchange_date'),
             'budget' => $request->input('budget'),
@@ -99,10 +102,6 @@ class EventController extends Controller
             ->where('status', 'accepted')
             ->count();
 
-        $canDraw = $event->drawn_at === null
-            && $pendingCount === 0
-            && $acceptedCount >= 3;
-
         return Inertia::render('Events/Show', [
             'event' => $event,
             'participants' => $event->participants->map(function($participant) {
@@ -113,11 +112,48 @@ class EventController extends Controller
                     'status' => $participant->status
                 ];
             }),
-            'canDraw' => $canDraw,
             'pendingCount' => $pendingCount,
             'acceptedCount' => $acceptedCount,
+            'drawnAt' => $event->drawn_at
         ]);
     }
+
+
+    public function draw(Event $event) {
+
+        $acceptedParticipants = $event->participants()
+            ->where('status', 'accepted')
+            ->get();
+
+        DB::transaction(function () use ($event, $acceptedParticipants) {
+
+            /*
+                Qui sto dicendo, mescolami a caso tutti quelli che hanno accetato(in questo modo ho la componente random).
+                poi di quella lista la divido prendendo il primo utente e spostandolo nell'ultimo indice.
+            */
+            $givers = $acceptedParticipants->pluck('id')->shuffle()->values();
+            $receivers = $givers->slice(1)->push($givers[0])->values();
+
+            //dd($receivers->all(), $givers->all());
+            
+            foreach ($givers as $index => $giverId) {
+                Assignment::create([
+                    'event_id' => $event->id,
+                    'giver_participant_id' => $giverId,
+                    'receiver_participant_id' => $receivers[$index],
+                    'viewed_at' => null,
+                ]);
+            }
+
+            $event->update([
+                'drawn_at' => Carbon::now(),
+            ]);
+
+        });
+
+        return back()->with('success', 'Estrazione completata con successo.');
+    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -1,19 +1,21 @@
 import { Link, Head, router } from '@inertiajs/react';
 
 export default function Show({ event, 
-    participants, 
-    canDraw, 
+    participants,
     pendingCount, 
-    acceptedCount
+    acceptedCount,
+    drawnAt
  }) {
     
-        const handleRemoveParticipant = (id) => {
+    const handleRemoveParticipant = (id) => {
         router.delete(route('participants.destroy', id));
     };
 
     const handleUpdateStatus = (participantId, status) => {
         router.patch(route('participants.update', participantId), { status });
     };
+
+    const canDraw = acceptedCount >= 3 && pendingCount === 0;
 
     return (
         <>
@@ -61,8 +63,42 @@ export default function Show({ event,
                                     In attesa
                                 </span>
                             </div>
+                            {drawnAt && (
+                                <div className="flex flex-col items-center md:items-start">
+                                    <span className="text-2xl font-bold text-sky-400">
+                                        Estratto
+                                    </span>
+                                    <span className="text-xs uppercase tracking-wider text-default-500">
+                                        Stato
+                                    </span>
+                                </div>
+                            )}
                         </div>
-
+                    
+                        {!drawnAt ? (
+                            <div className="flex w-full flex-col items-end gap-2 md:w-auto">
+                                <button
+                                    type="button"
+                                    onClick={() => router.post(route('events.draw', event.id))}
+                                    className={`inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold text-white ${
+                                        canDraw
+                                            ? 'bg-emerald-600 hover:bg-emerald-700'
+                                            : 'bg-emerald-800/40 cursor-not-allowed'
+                                    }`}
+                                >
+                                    Avvia estrazione
+                                </button>
+                                {!canDraw && (
+                                    <p className="max-w-xs text-center text-[11px] text-red-400 md:text-right">
+                                        Tutti i partecipanti devono rispondere, almeno 3 partecipanti
+                                    </p>
+                                )}
+                            </div>
+                        ) : (
+                            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400">
+                                Estrazione completata
+                            </span>
+                        )}
                     </div>
 
                     <div className="rounded-lg border border-divider bg-content1">
@@ -142,9 +178,7 @@ export default function Show({ event,
                                                                 </button>
                                                                 <button
                                                                     type="button"
-                                                                    onClick={() =>
-                                                                        handleUpdateStatus( participant.id, 'rejected', )
-                                                                    }
+                                                                    onClick={() => handleUpdateStatus( participant.id, 'rejected')}
                                                                     className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-500 hover:bg-amber-500/30"
                                                                 >
                                                                     Rifiuta
