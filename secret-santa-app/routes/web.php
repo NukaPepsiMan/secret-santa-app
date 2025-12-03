@@ -36,9 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-    Route::patch('/participants/{participant}/respond', [ParticipantController::class, 'respond'])
-        ->name('participants.respond');
-
     Route::patch('/participants/{participant}', [ParticipantController::class, 'update'])
         ->name('participants.update');
 

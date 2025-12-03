@@ -152,7 +152,7 @@ class EventController extends Controller
 
         });
 
-        return back()->with('success', 'Estrazione completata con successo.');
+        return back()->with('message', 'Estrazione completata con successo.');
     }
 
 
@@ -182,6 +182,6 @@ class EventController extends Controller
 
         return redirect()
             ->route('events.index')
-            ->with('success', 'Evento eliminato con successo');
+            ->with('message', 'Evento eliminato con successo');
     }
 }

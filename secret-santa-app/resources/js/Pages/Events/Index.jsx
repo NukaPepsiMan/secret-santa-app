@@ -2,7 +2,13 @@ import { Head, Link, router } from '@inertiajs/react';
 
 export default function Index({ events }) {
     const handleDelete = (id) => {
-        router.delete(route('events.destroy', id));
+        router.delete(route('events.destroy', id), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     return (

@@ -10,11 +10,23 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('wishlist.store', participantId));
+        post(route('wishlist.store', participantId), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
     
     const handleDelete = (deleteItem) => {
-        router.delete(route('wishlist.destroy', deleteItem.id));
+        router.delete(route('wishlist.destroy', deleteItem.id), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     const [editingItem, setEditingItem] = useState(null);
@@ -24,6 +36,11 @@ export default function Wishlist({ participantId, event, wishlistItems }) {
     const handleEditSave = () => {
         router.patch(route('wishlist.update', editingItem.id), editForm, {
             onFinish: () => setEditingItem(null),
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
         });
     };
 

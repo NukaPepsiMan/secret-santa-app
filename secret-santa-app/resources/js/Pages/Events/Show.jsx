@@ -1,4 +1,4 @@
-import { Link, Head, router } from '@inertiajs/react';
+import { Link, Head, router, usePage} from '@inertiajs/react';
 
 export default function Show({ event, 
     participants,
@@ -8,11 +8,33 @@ export default function Show({ event,
  }) {
     
     const handleRemoveParticipant = (id) => {
-        router.delete(route('participants.destroy', id));
+        router.delete(route('participants.destroy', id), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
+    };
+
+    const handleDrawParticipant = (id) => {
+        router.post(route('events.draw', id), {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     const handleUpdateStatus = (participantId, status) => {
-        router.patch(route('participants.update', participantId), { status });
+        router.patch(route('participants.update', participantId), { status } , {
+            onSuccess: (page) => {
+                if (page.props) {
+                    console.log(page.props.flash);
+                }
+            },
+        });
     };
 
     const canDraw = acceptedCount >= 3 && pendingCount === 0;
@@ -79,7 +101,7 @@ export default function Show({ event,
                             <div className="flex w-full flex-col items-end gap-2 md:w-auto">
                                 <button
                                     type="button"
-                                    onClick={() => router.post(route('events.draw', event.id))}
+                                    onClick={() => handleDrawParticipant(event.id)}
                                     className={`inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold text-white ${
                                         canDraw
                                             ? 'bg-emerald-600 hover:bg-emerald-700'

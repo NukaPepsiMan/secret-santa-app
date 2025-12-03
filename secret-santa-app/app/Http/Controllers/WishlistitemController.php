@@ -37,7 +37,7 @@ class WishlistitemController extends Controller
         $validated = $request->validated();
         $participant->wishlistItems()->create($validated);
 
-        return back()->with('success','Oggetto aggiunto alla wishlist.');
+        return back()->with('message','Oggetto aggiunto alla wishlist.');
     }
 
     public function update(StoreWishlistitemRequest $request, WishlistItem $wishlistItem) {
@@ -45,13 +45,13 @@ class WishlistitemController extends Controller
         $validated = $request->validated();
         $wishlistItem->update($validated);
 
-        return back()->with('success','Oggetto aggiornato.');
+        return back()->with('message','Oggetto aggiornato.');
     }
 
     public function destroy(WishlistItem $wishlistItem) {
 
         $wishlistItem->delete();
 
-        return back()->with('success','Oggetto rimosso dalla wishlist.');
+        return back()->with('message','Oggetto rimosso dalla wishlist.');
     }
 }
