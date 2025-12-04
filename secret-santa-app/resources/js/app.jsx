@@ -23,7 +23,7 @@ createInertiaApp({
 
         root.render(
             <HeroUIProvider navigate={router.visit}>
-                 <NextThemesProvider attribute="class">
+                 <NextThemesProvider attribute="class" defaultTheme='system'>
                     <App {...props} />
                  </NextThemesProvider>
             </HeroUIProvider>
