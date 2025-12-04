@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,13 @@ class EventFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            //
+            'organizer_id' => User::factory(),
+            'name' => fake()->word(),
+            'exchange_date' => fake()->dateTimeBetween('+1 week', '+1 year'),
+            'budget' => fake()->randomFloat(2,5,200),
+            'drawn_at' => null,
         ];
     }
 }

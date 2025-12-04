@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Participant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,12 @@ class WishlistitemFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            //
+            'participant_id' => Participant::factory(),
+            'name' => fake()->sentence(3),
+            'description' => fake()->optional()->sentence(8),
         ];
     }
+    
 }
