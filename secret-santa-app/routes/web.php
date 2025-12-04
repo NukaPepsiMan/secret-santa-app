@@ -69,11 +69,8 @@ Route::middleware('auth')->group(function () {
             'store',
             'show',
             'destroy',
-        ]);
+    ]);
 });
-
-
-
 
 
 require __DIR__.'/auth.php';
