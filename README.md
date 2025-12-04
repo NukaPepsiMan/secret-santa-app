@@ -20,6 +20,12 @@
 
 3. php artisan migrate::fresh --seed (qui sto dicendo -> droppa tutte le table e rilancia tutte le migration con un nuovo seed)
 
+4. php artisan serve
+
+5. npm run dev (la dark mode (non so per quale assurdo motivo) al primo avvio non funziona, provate a buttarlo giù il fontend e rilanciate il comando assicurandovi di avere il tema scuro sul vostro pc)
+
+N.B -> eseguire tutto dentro la directory secret-santa-app
+
 ---
 
 ## configurazione login
