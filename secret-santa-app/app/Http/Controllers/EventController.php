@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Assignment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventInvitationMail;
 
 class EventController extends Controller
 {
@@ -82,10 +84,11 @@ class EventController extends Controller
         $users = User::all();
 
         foreach($users as $user) {
-            Participant::create([
+            $participant = Participant::create([
                 'event_id' => $event->id,
                 'user_id' => $user->id,
             ]);
+            Mail::to($user->email)->send(new EventInvitationMail($event, $participant));
         }
 
         return redirect()->route('events.index');
