@@ -62,15 +62,17 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/events/{event}/draw', [EventController::class, 'draw'])
         ->name('events.draw');
+
+    Route::resource('events', EventController::class)->only([
+            'index',
+            'create',
+            'store',
+            'show',
+            'destroy',
+        ]);
 });
 
-Route::resource('events', EventController::class)->only([
-    'index',
-    'create',
-    'store',
-    'show',
-    'destroy',
-]);
+
 
 
 
