@@ -8,6 +8,7 @@ export default function Show({ event,
  }) {
     
     const handleRemoveParticipant = (id) => {
+
         router.delete(route('participants.destroy', id), {
             onSuccess: (page) => {
                 if (page.props) {
@@ -39,6 +40,10 @@ export default function Show({ event,
 
     const canDraw = acceptedCount >= 3 && pendingCount === 0;
 
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('it-IT');
+    }
+
     return (
         <>
             <Head title={`Partecipanti - ${event.name}`} />
@@ -55,7 +60,7 @@ export default function Show({ event,
                                     Budget: €{event.budget}
                                 </h1>
                                 <h1 className="inline-flex items-center font-medium text-gray-400">
-                                    Data scambio: {event.exchange_date}
+                                    Data scambio: {formatDate(event.exchange_date)}
                                 </h1>
                             </div>
                         </div>

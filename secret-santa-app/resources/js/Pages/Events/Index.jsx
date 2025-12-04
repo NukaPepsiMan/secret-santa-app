@@ -1,6 +1,11 @@
 import { Head, Link, router } from '@inertiajs/react';
 
 export default function Index({ events }) {
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('it-IT');
+    }
+
     const handleDelete = (id) => {
         router.delete(route('events.destroy', id), {
             onSuccess: (page) => {
@@ -67,7 +72,7 @@ export default function Index({ events }) {
                                                 Budget: €{event.budget}
                                             </span>
                                             <span className="inline-flex rounded-full">
-                                                Scambio: {event.exchange_date}
+                                                Scambio: {formatDate(event.exchange_date)}
                                             </span>
                                             {event.drawn_at && (
                                                 <span className="inline-flex rounded-full bg-sky-500/10 px-3 py-1 text-xs text-sky-400">

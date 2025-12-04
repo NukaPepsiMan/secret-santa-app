@@ -22,6 +22,10 @@ export default function Index({ userEvents }) {
         });
     };
 
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('it-IT');
+    }
+
     return (
         <>
             <Head title="I miei eventi" />
@@ -62,7 +66,7 @@ export default function Index({ userEvents }) {
                                         </h2>
                                         <div className="flex flex-wrap gap-2 text-sm">
                                             <span className="inline-flex rounded-full px-3 py-1 text-xs text-grey-200">
-                                                Scambio: {item.event.exchange_date}
+                                                Scambio: {formatDate(item.event.exchange_date)}
                                             </span>
                                             <span className="inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs text-emerald-400">
                                                 Budget: €{item.event.budget}

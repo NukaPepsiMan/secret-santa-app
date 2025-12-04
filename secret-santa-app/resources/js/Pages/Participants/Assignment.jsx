@@ -1,6 +1,11 @@
 import { Head, Link } from '@inertiajs/react';
 
 export default function Assignment({ event, receiver, wishlistItems }) {
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('it-IT');
+    }
+
     return (
         <>
             <Head title="La tua assegnazione" />
@@ -24,7 +29,7 @@ export default function Assignment({ event, receiver, wishlistItems }) {
                             {event.name}
                         </p>
                         <p className="text-sm text-default-500">
-                            Data scambio: {event.exchange_date} • Budget: €{event.budget}
+                            Data scambio: {formatDate(event.exchange_date)} • Budget: €{event.budget}
                         </p>
                     </div>
 
